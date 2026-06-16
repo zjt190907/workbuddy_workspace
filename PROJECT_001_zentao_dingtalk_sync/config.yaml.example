@@ -1,0 +1,10 @@
+zentao:
+  url: "http://172.16.1.138:8080/zentao"
+  username: "your_username"
+  password: ""  # 使用环境变量 ZENTAO_PASSWORD 或在此填写
+
+dingtalk:
+  access_token: ""  # 使用环境变量 DINGTALK_ACCESS_TOKEN 或在此填写
+
+check:
+  interval_minutes: 60

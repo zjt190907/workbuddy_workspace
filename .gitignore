@@ -31,5 +31,12 @@ build/
 dist/
 *.stl
 
+# Secrets & config
+config.yaml
+.env
+*.pem
+*.key
+*.p12
+
 # Logs
 *.log
