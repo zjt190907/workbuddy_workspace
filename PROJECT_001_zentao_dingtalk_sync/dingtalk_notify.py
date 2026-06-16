@@ -6,6 +6,8 @@
 import requests
 import logging
 import time
+import os
+import sys
 
 logger = logging.getLogger(__name__)
 
@@ -91,7 +93,11 @@ class DingTalkNotifier:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    notifier = DingTalkNotifier(access_token="0b37b87433602bd046b3a009bae18b272efd356ac3d82c3bea4d6d7b5979bdb7")
+    token = os.getenv("DINGTALK_ACCESS_TOKEN", "")
+    if not token:
+        logger.error("请设置 DINGTALK_ACCESS_TOKEN 环境变量")
+        sys.exit(1)
+    notifier = DingTalkNotifier(access_token=token)
     # 测试推送
     notifier.send_markdown(
         "禅道监控测试",

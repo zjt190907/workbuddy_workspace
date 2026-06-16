@@ -2,6 +2,10 @@
 禅道Bug定时监控主程序
 检查禅道"我的bug"，发现新增bug时通过钉钉推送通知
 由 WorkBuddy 自动化任务调度，每2小时运行一次
+
+配置优先级：环境变量 > config.yaml
+  环境变量：ZENTAO_URL, ZENTAO_USERNAME, ZENTAO_PASSWORD
+          DINGTALK_ACCESS_TOKEN, CHECK_INTERVAL_MINUTES
 """
 
 import yaml
@@ -30,9 +34,42 @@ logger = logging.getLogger("zentao_monitor")
 
 
 def load_config(path: str = "config.yaml") -> dict:
-    """加载配置文件"""
-    with open(path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+    """加载配置，环境变量优先级高于config.yaml"""
+    config = {
+        "zentao": {"url": "", "username": "", "password": ""},
+        "dingtalk": {"access_token": ""},
+        "check": {"interval_minutes": 60},
+    }
+
+    # 首先尝试从 config.yaml 加载（可选，用于本地开发）
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                file_config = yaml.safe_load(f)
+                if file_config:
+                    config["zentao"].update(file_config.get("zentao", {}))
+                    config["dingtalk"].update(file_config.get("dingtalk", {}))
+                    config["check"].update(file_config.get("check", {}))
+        except Exception as e:
+            logger.warning("读取config.yaml失败，将使用环境变量: %s", e)
+
+    # 环境变量覆盖（优先级更高）
+    env_map = {
+        "ZENTAO_URL": ("zentao", "url"),
+        "ZENTAO_USERNAME": ("zentao", "username"),
+        "ZENTAO_PASSWORD": ("zentao", "password"),
+        "DINGTALK_ACCESS_TOKEN": ("dingtalk", "access_token"),
+        "CHECK_INTERVAL_MINUTES": ("check", "interval_minutes"),
+    }
+    for env_key, (section, key) in env_map.items():
+        val = os.getenv(env_key)
+        if val:
+            if key == "interval_minutes":
+                config[section][key] = int(val)
+            else:
+                config[section][key] = val
+
+    return config
 
 
 def run_once() -> bool:
