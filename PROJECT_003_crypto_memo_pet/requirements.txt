@@ -1,0 +1,4 @@
+cryptography>=41.0
+Pillow>=9.5.0
+pywin32>=306
+pyinstaller>=6.0
