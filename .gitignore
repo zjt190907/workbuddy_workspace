@@ -40,3 +40,10 @@ config.yaml
 
 # Logs
 *.log
+
+# Windows shortcuts & junk
+*.lnk
+nul
+
+# IDE internal
+.codebuddy/

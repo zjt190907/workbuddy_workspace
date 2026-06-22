@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>美国县级失业率与收入分析报告 (2000-2023)</title>
+<style>
+:root {
+  --bg: #0d1117;
+  --card-bg: #161b22;
+  --border: #30363d;
+  --text: #c9d1d9;
+  --text-secondary: #8b949e;
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --red: #f85149;
+  --orange: #d2991d;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--text); line-height: 1.6;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+/* Header */
+header {
+  background: linear-gradient(135deg, #0d419d 0%, #0d1117 100%);
+  padding: 60px 0 40px; text-align: center; margin-bottom: 40px;
+}
+header h1 { font-size: 2.2em; font-weight: 700; margin-bottom: 8px; }
+header p { color: var(--text-secondary); font-size: 1.05em; }
+
+/* Sections */
+section { margin-bottom: 48px; }
+.section-title {
+  font-size: 1.5em; font-weight: 700; color: var(--accent);
+  border-bottom: 2px solid var(--border); padding-bottom: 8px; margin-bottom: 20px;
+}
+
+/* Cards */
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 20px; text-align: center;
+}
+.stat-card .value { font-size: 1.8em; font-weight: 700; color: var(--accent); }
+.stat-card .label { font-size: 0.85em; color: var(--text-secondary); margin-top: 4px; }
+
+/* Alert box */
+.alert {
+  background: rgba(210,153,29,0.1); border-left: 3px solid var(--orange);
+  padding: 12px 16px; border-radius: 4px; margin-bottom: 20px; font-size: 0.92em;
+}
+.alert strong { color: var(--orange); }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.9em; }
+th { background: var(--card-bg); color: var(--accent); text-align: left; padding: 10px 12px; border-bottom: 2px solid var(--border); }
+td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+tr:hover td { background: rgba(88,166,255,0.05); }
+
+/* Chart iframe */
+.chart-frame {
+  width: 100%; height: 520px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--card-bg); margin-bottom: 16px;
+}
+
+/* Conclusions */
+.conclusion-list { list-style: none; padding: 0; }
+.conclusion-list li {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px 20px; margin-bottom: 12px;
+}
+.conclusion-list li .num {
+  display: inline-block; background: var(--accent); color: #fff;
+  width: 28px; height: 28px; border-radius: 50%; text-align: center;
+  line-height: 28px; font-weight: 700; margin-right: 10px; font-size: 0.9em;
+}
+.conclusion-list li strong { color: var(--accent2); }
+
+/* Methodology */
+.method-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.method-card {
+  background: var(--card-bg); border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px;
+}
+.method-card h4 { color: var(--accent); margin-bottom: 8px; }
+.method-card p { font-size: 0.9em; color: var(--text-secondary); }
+
+/* Footer */
+footer { border-top: 1px solid var(--border); padding: 30px 0; text-align: center; color: var(--text-secondary); font-size: 0.85em; margin-top: 40px; }
+
+@media (max-width: 768px) {
+  .container { padding: 0 16px; }
+  header h1 { font-size: 1.5em; }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <h1>美国县级失业率与家庭收入分析报告</h1>
+    <p>宏观就业景气 + 区域分化 | 数据来源: USDA Economic Research Service | 时间跨度: 2000–2023</p>
+  </div>
+</header>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- Executive Summary -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">一、执行摘要</h2>
+  <p style="margin-bottom:16px;">
+    本报告基于 USDA ERS 提供的美国 3,233 个县（county）2000–2023 年失业率和 2022 年家庭收入中位数数据，
+    对全国就业景气趋势、区域分化程度和 COVID-19 冲击后的恢复情况进行多维度分析。
+  </p>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="value">3,233</div><div class="label">覆盖县数</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">3.7%</div><div class="label">2023 全国中位失业率</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">$60,833</div><div class="label">2022 收入中位数</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">0.186</div><div class="label">2023 基尼系数</div>
+    </div>
+    <div class="stat-card">
+      <div class="value">561</div><div class="label">未恢复县数</div>
+    </div>
+  </div>
+
+  <div class="alert">
+    <strong>重要局限:</strong> 家庭收入中位数仅提供 2022 年单一年度数据，无法进行时间序列分析。
+    所有收入分析为名义值（未做 CPI 平减），不能用于跨年收入趋势推断。
+    地理边界数据未包含在数据集中，本报告使用表格 + 条形图代替地图可视化。
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: Data Exploration -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">二、数据探索</h2>
+
+  <h3 style="color:var(--accent2);margin-bottom:12px;">2.1 数据概览</h3>
+  <table>
+    <tr><th>维度</th><th>值</th></tr>
+    <tr><td>数据源</td><td>Bureau of Labor Statistics (LAUS) + Census Bureau (SAIPE)</td></tr>
+    <tr><td>总记录数</td><td>3,286 行（1 US + 53 State + 3,233 County）</td></tr>
+    <tr><td>字段数</td><td>104 列（5 个分类变量 + 96 个年度指标 + 2 个收入 + 1 个占位）</td></tr>
+    <tr><td>时间跨度</td><td>2000–2023（24 年）</td></tr>
+    <tr><td>可识别区域</td><td>52 个州（含 DC、PR），3,233 个县</td></tr>
+    <tr><td>数据完整性</td><td>3,128 个县有完整 24 年数据（96.7%），9 个县无任何失业数据</td></tr>
+  </table>
+
+  <h3 style="color:var(--accent2);margin-bottom:12px;">2.2 字段字典</h3>
+  <div class="method-grid">
+    <div class="method-card">
+      <h4>身份标识 (3)</h4>
+      <p>FIPS_Code (5位联邦编码)、State (州缩写)、Area_Name (县名)</p>
+    </div>
+    <div class="method-card">
+      <h4>城乡分类 (3)</h4>
+      <p>Rural_Urban_Continuum_Code_2023、Urban_Influence_Code_2013、Metro_2023 (0=非都市,1=都市)</p>
+    </div>
+    <div class="method-card">
+      <h4>年度就业指标 (96 = 24年 × 4)</h4>
+      <p>Civilian_labor_force、Employed、Unemployed、Unemployment_rate (2000-2023)</p>
+    </div>
+    <div class="method-card">
+      <h4>收入指标 (2)</h4>
+      <p>Median_Household_Income_2022、Med_HH_Income_Percent_of_State_Total_2022</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">2.3 缺失率分析</h3>
+  <div class="alert" style="border-color:var(--accent);background:rgba(88,166,255,0.08);">
+    <strong>失业率字段:</strong> 各年缺失率均在 0.4%–0.7% 之间，仅 2020 年略高至 2.81%（可能因 COVID 期间数据收集困难）。
+    整体数据质量优秀，无需复杂插补处理。
+  </div>
+  <table>
+    <tr><th>字段</th><th>缺失率</th><th>说明</th></tr>
+    <tr><td>Unemployment_rate_* (2000-2019)</td><td>0.43%–0.71%</td><td>极低，可直接使用</td></tr>
+    <tr><td>Unemployment_rate_2020</td><td style="color:var(--orange)">2.81%</td><td>COVID 年偏高，注意分析时排除 NaN</td></tr>
+    <tr><td>Unemployment_rate_2021-2023</td><td>0.40%</td><td>恢复正常</td></tr>
+    <tr><td>Median_Household_Income_2022</td><td>2.78%</td><td>部分县无收入数据</td></tr>
+    <tr><td>城乡分类字段</td><td>0.37%–0.43%</td><td>极低</td></tr>
+  </table>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">2.4 标识字段一致性</h3>
+  <table>
+    <tr><th>检查项</th><th>结果</th></tr>
+    <tr><td>FIPS 重复</td><td style="color:var(--accent2)">0 条重复 — 完全唯一</td></tr>
+    <tr><td>(State, Area_Name) 重复</td><td style="color:var(--accent2)">0 条重复</td></tr>
+    <tr><td>FIPS 格式（5位数字）</td><td style="color:var(--accent2)">100% 合规</td></tr>
+    <tr><td>State 字段</td><td>52 个不同值（50州 + DC + PR）</td></tr>
+    <tr><td>US 级别行</td><td>1 行 (FIPS=00000)</td></tr>
+    <tr><td>州级别行（FIPS 后3位=000）</td><td>53 行</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: Indicators -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">三、指标构建</h2>
+
+  <h3 style="color:var(--accent2);margin-bottom:12px;">3.1 失业率指标</h3>
+  <div class="method-grid">
+    <div class="method-card">
+      <h4>同比变化 (YoY)</h4>
+      <p>UR_YoY_t = UR_t - UR_{t-1}，反映年度就业趋势变动方向与幅度，覆盖 2001–2023。</p>
+    </div>
+    <div class="method-card">
+      <h4>3 年移动平均 (MA3)</h4>
+      <p>UR_MA3_t = avg(UR_{t-2}, UR_{t-1}, UR_t)，平滑年度波动，用于识别中期趋势。</p>
+    </div>
+    <div class="method-card">
+      <h4>COVID 冲击幅度</h4>
+      <p>UR_shock_2020 = UR_2020 - UR_2019，刻画疫情对各县就业的差异化冲击。</p>
+    </div>
+    <div class="method-card">
+      <h4>恢复滞后</h4>
+      <p>recovery_lag = UR_2023 - UR_2019，正值表示尚未完全恢复至疫情前水平。</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">3.2 家庭收入指标</h3>
+  <div class="alert">
+    <strong>名义分析:</strong> 仅 2022 年单年数据。CPI 平减不可行，所有收入数值为名义美元。
+    以下为 2022 年县级截面统计：
+  </div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="value">$60,833</div><div class="label">中位数</div></div>
+    <div class="stat-card"><div class="value">$63,289</div><div class="label">均值</div></div>
+    <div class="stat-card"><div class="value">$16,306</div><div class="label">标准差</div></div>
+    <div class="stat-card"><div class="value">$28,972–$167,605</div><div class="label">范围</div></div>
+    <div class="stat-card"><div class="value">89.6%</div><div class="label">县占州均值比 (均值)</div></div>
+  </div>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">3.3 区域分化指标</h3>
+  <table>
+    <tr><th>指标</th><th>定义</th><th>核心发现</th></tr>
+    <tr>
+      <td>全国基尼系数</td>
+      <td>跨县失业率不平等程度</td>
+      <td>2000年 0.225 → 2023年 0.186，<strong style="color:var(--accent2)">整体呈下降趋势</strong></td>
+    </tr>
+    <tr>
+      <td>泰尔指数</td>
+      <td>广义熵不平等测度</td>
+      <td>与基尼同向变动，2000年 0.086 → 2023年 0.060</td>
+    </tr>
+    <tr>
+      <td>州内分位差 (P90-P10)</td>
+      <td>各州内部县间失业率离散度</td>
+      <td>AK 最分散 (6.1pp)，NH 最集中 (0.4pp)</td>
+    </tr>
+    <tr>
+      <td>州均值排名</td>
+      <td>各州失业率均值排序</td>
+      <td>高失业集中在 Appalachian、西南边境、阿拉斯加</td>
+    </tr>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: Visualizations -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">四、可视化分析</h2>
+
+  <h3 style="color:var(--accent2);margin-bottom:12px;">4.1 全国趋势 + 分位带</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    深色线为全国中位数，虚线为均值。浅蓝色带为 P25-P75 和 P10-P90 分位区间。
+    2020 年可见剧烈跳升（中位数从 3.7% → 6.0%），但 2023 年 P10-P90 带宽已显著收窄。
+  </p>
+  <iframe class="chart-frame" src="chart_national_trend.html"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.2 区域不平等趋势：基尼系数</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    2000-2023 年跨县失业率基尼系数。注意 2008-2009 金融危机和 2020 COVID 期间基尼系数出现
+    <strong>反直觉下降</strong>——这并非不平等减少，而是大面积同步上升导致相对差距缩小。
+  </p>
+  <iframe class="chart-frame" src="chart_gini_trend.html"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.3 州级失业率热力图 (Top 25)</h3>
+  <iframe class="chart-frame" src="chart_state_heatmap.html" style="height:620px;"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.4 COVID 冲击 Top 20 县</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    冲击幅度 = 2020 失业率 - 2019 失业率（百分点）。旅游依赖型地区（夏威夷 Maui、Kauai；内华达 Clark/Las Vegas）首当其冲，
+    制造业+旅游复合型（密歇根 Wayne/Detroit）也受重创。
+  </p>
+  <iframe class="chart-frame" src="chart_shock_top20.html" style="height:620px;"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.5 恢复最慢 Top 20 县</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    恢复指标：2023 UR - 2019 UR，且 2023 UR 高于全国中位数 (3.4%)。
+    Texas 多个县（Kenedy、Val Verde、Sutton）以及 Nevada Mineral County 恢复最慢。
+    5 个县 2023 失业率甚至超过 COVID 峰值——这是真正的结构性问题，不是周期性延迟。
+  </p>
+  <iframe class="chart-frame" src="chart_recovery_top20.html" style="height:620px;"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.6 恢复轨迹对比</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    每条线代表一个恢复最慢县的失业率轨迹（2019 → 峰值 → 2023）。注意部分县呈 V 型反弹后再上升的特征。
+  </p>
+  <iframe class="chart-frame" src="chart_recovery_trajectory.html"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.7 州内分化排行 (2023)</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    以 P90-P10 度量的州内县间失业率离散度。阿拉斯加、波多黎各、加利福尼亚内部分化最大，
+    新罕布什尔、特拉华、罗德岛几乎一致。
+  </p>
+  <iframe class="chart-frame" src="chart_state_divergence.html" style="height:900px;"></iframe>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">4.8 失业率 vs 家庭收入 (2022)</h3>
+  <p style="margin-bottom:8px;color:var(--text-secondary);font-size:0.9em;">
+    都市县（蓝色）与非都市县（红色）在收入与失业率上的分布对比。高收入都市县集中右上方，
+    低收入非都市县横跨整个失业率谱系。
+  </p>
+  <iframe class="chart-frame" src="chart_income_vs_ur.html" style="height:620px;"></iframe>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: Anomaly Counties - Deep Dive -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">五、异常县深度分析</h2>
+
+  <h3 style="color:var(--accent2);margin-bottom:12px;">5.1 COVID 冲击格局</h3>
+  <p>COVID 冲击 Top 20 呈现清晰的产业地理特征：</p>
+  <table>
+    <tr><th>类型</th><th>代表县</th><th>冲击幅度</th><th>原因</th></tr>
+    <tr><td>旅游度假型</td><td>Maui, HI; Kauai, HI; Clark, NV</td><td>+11~15pp</td><td>旅游停摆直接冲击酒店/餐饮/航空就业</td></tr>
+    <tr><td>制造业集中型</td><td>Wayne, MI; Bronx, NY</td><td>+8~11pp</td><td>制造业+服务业双重打击</td></tr>
+    <tr><td>油气依赖型</td><td>Crane, TX; Yoakum, TX; Ector, TX</td><td>+8~10pp</td><td>油价暴跌+疫情叠加</td></tr>
+    <tr><td>赌场/娱乐型</td><td>Atlantic, NJ</td><td>+12pp</td><td>赌场关闭，人员密集场所停摆</td></tr>
+  </table>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">5.2 恢复指标定义</h3>
+  <div class="method-grid">
+    <div class="method-card">
+      <h4>恢复滞后 (Recovery Lag)</h4>
+      <p><code>UR_2023 - UR_2019</code>。正值表示尚未回到疫情前就业水平。
+      同时要求 2023 UR > 全国中位数（3.4%），排除低失业率县的正值噪声。</p>
+    </div>
+    <div class="method-card">
+      <h4>恢复百分比</h4>
+      <p><code>(Peak_UR - UR_2023) / (Peak_UR - UR_2019) × 100%</code>。
+      100% = 完全恢复，0% = 仍在峰值，负值 = 持续恶化。</p>
+    </div>
+    <div class="method-card">
+      <h4>恶化判别</h4>
+      <p><code>UR_2023 > Peak_UR</code>。此类县就业状况并非"恢复缓慢"，
+      而是结构性持续恶化——需要区分对待。</p>
+    </div>
+  </div>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">5.3 持续恶化县（2023 > 峰值）</h3>
+  <div class="alert">
+    <strong>关键发现:</strong> 5 个县 2023 年失业率超过 COVID 峰值，
+    集中在 Texas (Kenedy, Hardeman) 和 Nevada (Mineral, Eureka)。
+    这不是恢复问题，而是结构性就业萎缩——可能涉及油气衰败或单一产业退化。
+  </div>
+
+  <h3 style="color:var(--accent2);margin:20px 0 12px;">5.4 恢复最慢县特征画像</h3>
+  <table>
+    <tr><th>特征</th><th>数量</th><th>说明</th></tr>
+    <tr><td>Texas 集中</td><td>Top 20 中占 9 席</td><td>油气+边境县经济结构脆弱</td></tr>
+    <tr><td>大都会县后遗症</td><td>Bronx NY, Kings NY, Passaic NJ</td><td>虽然绝对值下降多，但相对 2019 仍偏高</td></tr>
+    <tr><td>低收入县</td><td>Marlboro SC, Martin KY, Pulaski IL</td><td>低收入县恢复弹性弱，产业转型能力有限</td></tr>
+    <tr><td>岛屿/偏远型</td><td>Maui HI, Nantucket MA</td><td>地理隔离 + 单一产业依赖</td></tr>
+  </table>
+</section>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: Conclusions -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">六、政策与商业含义</h2>
+
+  <ol class="conclusion-list">
+    <li>
+      <strong><span class="num">1</span> 全国就业恢复表面强劲，但 561 个县仍未回到疫情前——「K型恢复」在县级层面持续</strong>
+      <p style="margin-top:8px;color:var(--text-secondary);">
+        <strong>政策含义：</strong>联邦层面的低失业率掩盖了县级的结构性短板。
+        建议州政府建立县级就业恢复指数，对恢复滞后县实施定向财政转移和产业扶持。
+        <br><strong>商业含义：</strong>零售/服务业企业在这些县扩张应谨慎评估劳动力供给和消费能力风险。
+      </p>
+    </li>
+    <li>
+      <strong><span class="num">2</span> 跨县失业率不平等（Gini）长期下降，但这是同步危机的假象</strong>
+      <p style="margin-top:8px;color:var(--text-secondary);">
+        <strong>解读陷阱：</strong>2008 和 2020 年 Gini 下降是因为全国各县失业率<em>同时跳升</em>，导致相对差距缩小。
+        这不代表就业更均衡。真正的健康信号是 Gini 稳定下降 + 均值下降同时出现（如 2014-2019 年）。
+        <br><strong>商业含义：</strong>不要仅看宏观基尼，应解剖 P10-P90 分位带。2023 年带宽收窄才是实质改善信号。
+      </p>
+    </li>
+    <li>
+      <strong><span class="num">3</span> 州内分化是新焦点——阿拉斯加 vs 新罕布什尔的 15 倍分化差距</strong>
+      <p style="margin-top:8px;color:var(--text-secondary);">
+        <strong>政策含义：</strong>高分化州（AK 6.1pp, PR 5.7pp, CA 4.4pp）需要<em>差异化州内政策</em>，
+        一刀切的州级就业政策在内部差异巨大的州效果有限。
+        <br><strong>商业含义：</strong>企业选址时不应只看州平均值，应检查目标县在州内的相对位置。
+        CA 的旧金山和帝国县是完全不同的两个世界。
+      </p>
+    </li>
+    <li>
+      <strong><span class="num">4</span> 旅游依赖型经济的脆弱性暴露无遗——冲击最大 + 恢复依赖外部条件</strong>
+      <p style="margin-top:8px;color:var(--text-secondary);">
+        <strong>商业含义：</strong>旅游地产投资、酒店连锁在单一旅游县（Maui、Clark、Atlantic）需建立
+        极端事件压力测试模型，准备 12 个月以上的现金储备缓冲。
+        <br><strong>政策含义：</strong>建议旅游重镇建立产业多元化激励——制造业、远程办公基础设施、
+        数字游民吸引计划。
+      </p>
+    </li>
+    <li>
+      <strong><span class="num">5</span> 5 个县 2023 年比 COVID 高峰期更糟——精准识别结构性衰退县</strong>
+      <p style="margin-top:8px;color:var(--text-secondary);">
+        <strong>政策紧急度：</strong>这些县需要的不再是「恢复」政策，而是「转型」政策——
+        再就业培训、新产业孵化、跨州劳动力输出通道。
+        <br><strong>商业含义：</strong>在这些县进行长期资本性投资（工厂、仓储物流中心）前应完成深度尽职调查，
+        确认当地就业基础是否发生不可逆转变。
+        <br><strong>方法论价值：</strong>「UR_2023 > COVID Peak」是一个简单而有效的结构性问题筛选器，
+        可供其他宏观经济分析复用。
+      </p>
+    </li>
+  </ol>
+</section>
+
+<!-- ============================================================ -->
+<!-- Methodology & Limitations -->
+<!-- ============================================================ -->
+<section>
+  <h2 class="section-title">七、方法论与局限</h2>
+  <div class="method-grid">
+    <div class="method-card">
+      <h4>数据来源</h4>
+      <p>USDA ERS | Unemployment and Median Household Income for the United States, States, and Counties, 2000–23</p>
+      <p>失业率: BLS Local Area Unemployment Statistics (LAUS)</p>
+      <p>收入: Census Bureau Small Area Income and Poverty Estimates (SAIPE)</p>
+    </div>
+    <div class="method-card">
+      <h4>分析工具</h4>
+      <p>Python 3.13 + Pandas + NumPy + SciPy + Plotly 6.8</p>
+      <p>不平等指标: 自定义 Gini Coefficient + Theil T Index 实现</p>
+    </div>
+    <div class="method-card">
+      <h4>核心局限</h4>
+      <p>① 收入数据仅 2022 单年，无法做时间趋势分析</p>
+      <p>② 名义收入未做 CPI 平减</p>
+      <p>③ 缺少地理边界数据，无法生成地图可视化</p>
+      <p>④ LAUS 县级失业率是年度均值，平滑了月度波动</p>
+    </div>
+    <div class="method-card">
+      <h4>数据加工说明</h4>
+      <p>缺失率 < 3%，未做插补 — 各组计算自动排除 NaN</p>
+      <p>FIPS 统一补零为 5 位字符串</p>
+      <p>分析范围限定为县级 (FIPS 后 3 位 ≠ 000)</p>
+      <p>Charts: Plotly interactive HTML</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>报告生成日期: 2025-06-17 | 数据截至: 2023 | 分析工具: WorkBuddy AI</p>
+  <p>数据来源: USDA Economic Research Service | Contact: austin.sanders@usda.gov</p>
+</footer>
+
+</div>
+
+</body>
+</html>
