@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026 旗舰芯片性能对比</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #e0e0e0;
+    padding: 24px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 22px; font-weight: 600; margin-bottom: 6px; color: #fff; }
+  .subtitle { font-size: 13px; color: #888; margin-bottom: 28px; }
+  h2 { font-size: 16px; font-weight: 500; color: #ccc; margin: 32px 0 14px; border-left: 3px solid #534AB7; padding-left: 10px; }
+  .chart-wrap { position: relative; width: 100%; background: #1a1a2e; border-radius: 12px; padding: 20px; margin-bottom: 8px; }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 10px; font-size: 12px; color: #aaa; }
+  .legend-row span { display: flex; align-items: center; gap: 5px; }
+  .legend-row .dot { width: 10px; height: 10px; border-radius: 2px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 8px; }
+  th { background: #1a1a2e; color: #aaa; font-weight: 500; text-align: left; padding: 10px 12px; border-bottom: 1px solid #333; white-space: nowrap; }
+  td { padding: 10px 12px; border-bottom: 1px solid #222; color: #ddd; }
+  tr:hover td { background: #1a1a2e; }
+  .tier-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+  .tier-1 { background: #3C3489; color: #CECBF6; }
+  .tier-2 { background: #085041; color: #9FE1CB; }
+  .tier-3 { background: #0C447C; color: #B5D4F4; }
+  .tier-4 { background: #4A1B0C; color: #F5C4B3; }
+  .highlight { color: #AFA9EC; font-weight: 500; }
+  .note { font-size: 12px; color: #666; margin-top: 20px; line-height: 1.6; }
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-bottom: 8px; }
+  .info-card { background: #1a1a2e; border-radius: 10px; padding: 16px; border: 1px solid #2a2a3e; }
+  .info-card .chip-name { font-size: 15px; font-weight: 500; color: #fff; margin-bottom: 4px; }
+  .info-card .chip-sub { font-size: 11px; color: #888; margin-bottom: 10px; }
+  .info-card .stat-row { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+  .info-card .stat-label { color: #888; }
+  .info-card .stat-val { color: #ddd; font-weight: 500; }
+  .info-card .phones { margin-top: 8px; padding-top: 8px; border-top: 1px solid #2a2a3e; font-size: 11px; color: #999; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<h1>2026 旗舰手机芯片性能对比</h1>
+<p class="subtitle">数据来源：安兔兔 V11、Geekbench 6 实测 · 截至 2026 年 7 月</p>
+
+<h2>安兔兔 V11 综合跑分（万分）</h2>
+<div class="legend-row">
+  <span><span class="dot" style="background:#7F77DD;"></span>超旗舰梯队</span>
+  <span><span class="dot" style="background:#1D9E75;"></span>旗舰梯队</span>
+  <span><span class="dot" style="background:#378ADD;"></span>中端梯队</span>
+</div>
+<div class="chart-wrap" style="height: 380px;">
+  <canvas id="antutuChart" role="img" aria-label="安兔兔跑分横向柱状图">2026旗舰芯片安兔兔跑分对比柱状图</canvas>
+</div>
+
+<h2>Geekbench 6 单核 vs 多核</h2>
+<div class="legend-row">
+  <span><span class="dot" style="background:#7F77DD;"></span>单核跑分</span>
+  <span><span class="dot" style="background:#5DCAA5;"></span>多核跑分</span>
+</div>
+<div class="chart-wrap" style="height: 380px;">
+  <canvas id="geekbenchChart" role="img" aria-label="Geekbench6跑分柱状图">Geekbench6单核多核跑分对比</canvas>
+</div>
+
+<h2>各芯片详细参数对比</h2>
+<table>
+  <thead>
+    <tr>
+      <th>芯片</th>
+      <th>梯队</th>
+      <th>制程</th>
+      <th>CPU 架构</th>
+      <th>GPU</th>
+      <th>安兔兔</th>
+      <th>GB6 单核</th>
+      <th>GB6 多核</th>
+      <th>代表机型</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="highlight">骁龙 8 Elite Gen5</td>
+      <td><span class="tier-badge tier-1">超旗舰</span></td>
+      <td>台积电 3nm N3P</td>
+      <td>2×4.74GHz + 6×3.6GHz<br>Oryon 全大核</td>
+      <td>Adreno 840<br>光追 2.0</td>
+      <td>440-452万</td>
+      <td>~3200</td>
+      <td>~11000+</td>
+      <td>小米 15 Ultra<br>OPPO Find X8 Ultra</td>
+    </tr>
+    <tr>
+      <td class="highlight">天玑 9500</td>
+      <td><span class="tier-badge tier-1">超旗舰</span></td>
+      <td>台积电 3nm N3E</td>
+      <td>1×4.21GHz + 3×3.5GHz<br>+ 4×2.7GHz</td>
+      <td>Immortalis-G940</td>
+      <td>415万+</td>
+      <td>~3966</td>
+      <td>~10000+</td>
+      <td>红米 K90 Max<br>一加 Ace 6 Pro</td>
+    </tr>
+    <tr>
+      <td class="highlight">A19 Pro</td>
+      <td><span class="tier-badge tier-1">超旗舰</span></td>
+      <td>台积电 3nm N3B</td>
+      <td>2×性能核 + 4×能效核</td>
+      <td>Apple GPU 6核</td>
+      <td>—</td>
+      <td>~4000+</td>
+      <td>~7000+</td>
+      <td>iPhone 17 Pro 系列</td>
+    </tr>
+    <tr>
+      <td>天玑 9400+</td>
+      <td><span class="tier-badge tier-2">旗舰</span></td>
+      <td>台积电 3nm</td>
+      <td>全大核架构</td>
+      <td>Immortalis-G925</td>
+      <td>380万+</td>
+      <td>~3100</td>
+      <td>~8800</td>
+      <td>一加 Ace 6 至尊版<br>realme GT Neo7</td>
+    </tr>
+    <tr>
+      <td>骁龙 8 Elite（上代）</td>
+      <td><span class="tier-badge tier-2">旗舰</span></td>
+      <td>台积电 3nm N3E</td>
+      <td>2×4.32GHz + 6×3.53GHz<br>Oryon</td>
+      <td>Adreno 830</td>
+      <td>360万+</td>
+      <td>~3100</td>
+      <td>~8500</td>
+      <td>vivo X200 Ultra<br>荣耀 Magic7 Pro</td>
+    </tr>
+    <tr>
+      <td>玄戒 O1</td>
+      <td><span class="tier-badge tier-2">旗舰</span></td>
+      <td>台积电 3nm</td>
+      <td>自研架构</td>
+      <td>—</td>
+      <td>350万+</td>
+      <td>~2900</td>
+      <td>~8200</td>
+      <td>小米 17 Pro 系列</td>
+    </tr>
+    <tr>
+      <td>麒麟 9030 / 9030 Pro</td>
+      <td><span class="tier-badge tier-3">中端旗舰</span></td>
+      <td>—（疑似 7nm）</td>
+      <td>自研架构</td>
+      <td>Maleoon 920</td>
+      <td>~280-300万</td>
+      <td>~2400</td>
+      <td>~6800</td>
+      <td>华为 Mate 70 / 80 系列</td>
+    </tr>
+    <tr>
+      <td>骁龙 8 Gen3 领先版</td>
+      <td><span class="tier-badge tier-3">中端</span></td>
+      <td>台积电 4nm</td>
+      <td>1×3.36GHz + 3×3.0GHz<br>+ 2×3.2GHz + 2×2.3GHz</td>
+      <td>Adreno 750</td>
+      <td>310万+</td>
+      <td>~2300</td>
+      <td>~7200</td>
+      <td>红米 Turbo5 Max<br>OPPO Reno13 Pro</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>四大梯队速览</h2>
+<div class="card-grid">
+  <div class="info-card" style="border-color: #534AB7;">
+    <div class="chip-name" style="color:#AFA9EC;">第一梯队 · 超旗舰</div>
+    <div class="chip-sub">安兔兔 400 万+ · 3000 元以上</div>
+    <div class="stat-row"><span class="stat-label">骁龙 8 Elite Gen5</span><span class="stat-val">440-452万</span></div>
+    <div class="stat-row"><span class="stat-label">天玑 9500</span><span class="stat-val">415万+</span></div>
+    <div class="stat-row"><span class="stat-label">A19 Pro</span><span class="stat-val">GB6 单核 4000+</span></div>
+    <div class="phones">性能天花板，重度游戏、专业影像、端侧 AI 全能。3nm 工艺全面普及。</div>
+  </div>
+  <div class="info-card" style="border-color: #0F6E56;">
+    <div class="chip-name" style="color:#9FE1CB;">第二梯队 · 旗舰</div>
+    <div class="chip-sub">安兔兔 320-400 万 · 2500-3500 元</div>
+    <div class="stat-row"><span class="stat-label">天玑 9400+</span><span class="stat-val">380万+</span></div>
+    <div class="stat-row"><span class="stat-label">骁龙 8 Elite</span><span class="stat-val">360万+</span></div>
+    <div class="stat-row"><span class="stat-label">玄戒 O1</span><span class="stat-val">350万+</span></div>
+    <div class="stat-row"><span class="stat-label">麒麟 9030 Pro</span><span class="stat-val">~300万</span></div>
+    <div class="phones">均衡全能，性能接近超旗舰，价格更友好。日常与游戏体验差距极小。</div>
+  </div>
+  <div class="info-card" style="border-color: #185FA5;">
+    <div class="chip-name" style="color:#B5D4F4;">第三梯队 · 中端</div>
+    <div class="chip-sub">安兔兔 250-320 万 · 1500-2500 元</div>
+    <div class="stat-row"><span class="stat-label">骁龙 8 Gen3 领先版</span><span class="stat-val">310万+</span></div>
+    <div class="stat-row"><span class="stat-label">天玑 9300+</span><span class="stat-val">300万+</span></div>
+    <div class="stat-row"><span class="stat-label">骁龙 7+ Gen4</span><span class="stat-val">280万+</span></div>
+    <div class="phones">上代旗舰下放，性价比拉满。主流手游满帧，日常完全够用。</div>
+  </div>
+  <div class="info-card" style="border-color: #993C1D;">
+    <div class="chip-name" style="color:#F5C4B3;">第四梯队 · 入门</div>
+    <div class="chip-sub">安兔兔 250 万以下 · 2000 元以下</div>
+    <div class="stat-row"><span class="stat-label">天玑 8200</span><span class="stat-val">~200万</span></div>
+    <div class="stat-row"><span class="stat-label">骁龙 6 Gen4</span><span class="stat-val">~180万</span></div>
+    <div class="stat-row"><span class="stat-label">麒麟 7000</span><span class="stat-val">~180万</span></div>
+    <div class="phones">基础够用，适合长辈机、备用机。微信短视频轻度游戏无压力。</div>
+  </div>
+</div>
+
+<h2>关键结论</h2>
+<table>
+  <tbody>
+    <tr>
+      <td style="width: 140px; color:#888;">安卓性能之王</td>
+      <td><span class="highlight">骁龙 8 Elite Gen5</span> — 多核性能超越苹果 M1 Air，Adreno 840 光追 2.0，AI 算力 100+ TOPS</td>
+    </tr>
+    <tr>
+      <td style="color:#888;">能效封神</td>
+      <td><span class="highlight">天玑 9500</span> — 同性能下功耗比 Gen5 低 10%，长时间游戏温控更优，续航最强</td>
+    </tr>
+    <tr>
+      <td style="color:#888;">单核无敌</td>
+      <td><span class="highlight">A19 Pro</span> — GB6 单核 4000+，iOS 生态长期流畅度无对手，但多核已被安卓超越</td>
+    </tr>
+    <tr>
+      <td style="color:#888;">国产自研</td>
+      <td><span class="highlight">玄戒 O1</span>（小米）3nm 自研芯，350 万+；<span class="highlight">麒麟 9030 Pro</span>（华为）通信影像优化突出</td>
+    </tr>
+    <tr>
+      <td style="color:#888;">避坑提醒</td>
+      <td>骁龙 888 / 骁龙 8 Gen1 为前代"火龙"，发热严重，新机坚决避开</td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="note">
+  数据来源：安兔兔 V11、Geekbench 6 实测跑分，综合自多家媒体 2026 年评测。跑分仅供参考，实际体验受散热设计、系统调校、内存规格影响。安兔兔跑分为典型范围值，不同机型可能有 ±5% 波动。A19 Pro 无安兔兔跑分（iOS 平台不安装安兔兔），仅列 Geekbench 数据。麒麟芯片因华为不公开详细参数，部分数据为推测值。
+</p>
+
+<script>
+const chipLabels = ['骁龙8 Elite Gen5', '天玑9500', '天玑9400+', '骁龙8 Elite', '玄戒O1', '麒麟9030 Pro', '骁龙8 Gen3领先版'];
+const antutuData = [446, 415, 380, 360, 350, 290, 310];
+const antutuColors = ['#7F77DD', '#7F77DD', '#1D9E75', '#1D9E75', '#1D9E75', '#378ADD', '#378ADD'];
+
+new Chart(document.getElementById('antutuChart'), {
+  type: 'bar',
+  data: {
+    labels: chipLabels,
+    datasets: [{
+      label: '安兔兔 V11 跑分（万分）',
+      data: antutuData,
+      backgroundColor: antutuColors,
+      borderRadius: 4,
+      barPercentage: 0.65
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#2a2a3e',
+        titleColor: '#fff',
+        bodyColor: '#ccc',
+        callbacks: {
+          label: function(ctx) { return ctx.parsed.x + ' 万分'; }
+        }
+      }
+    },
+    scales: {
+      x: {
+        beginAtZero: true,
+        grid: { color: '#2a2a3e' },
+        ticks: { color: '#888', callback: function(v) { return v + '万'; } },
+        title: { display: true, text: '安兔兔 V11 综合跑分', color: '#888', font: { size: 12 } }
+      },
+      y: {
+        grid: { display: false },
+        ticks: { color: '#ccc', font: { size: 12 } }
+      }
+    }
+  }
+});
+
+const gb6Labels = ['骁龙8 Elite Gen5', '天玑9500', 'A19 Pro', '天玑9400+', '骁龙8 Elite', '玄戒O1', '麒麟9030 Pro'];
+const gb6Single = [3200, 3966, 4100, 3100, 3100, 2900, 2400];
+const gb6Multi = [11000, 10000, 7200, 8800, 8500, 8200, 6800];
+
+new Chart(document.getElementById('geekbenchChart'), {
+  type: 'bar',
+  data: {
+    labels: gb6Labels,
+    datasets: [
+      {
+        label: 'GB6 单核',
+        data: gb6Single,
+        backgroundColor: '#7F77DD',
+        borderRadius: 3,
+        barPercentage: 0.8,
+        categoryPercentage: 0.6
+      },
+      {
+        label: 'GB6 多核',
+        data: gb6Multi,
+        backgroundColor: '#5DCAA5',
+        borderRadius: 3,
+        barPercentage: 0.8,
+        categoryPercentage: 0.6
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: '#2a2a3e',
+        titleColor: '#fff',
+        bodyColor: '#ccc'
+      }
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: '#ccc', font: { size: 11 }, maxRotation: 30, minRotation: 0 }
+      },
+      y: {
+        beginAtZero: true,
+        grid: { color: '#2a2a3e' },
+        ticks: { color: '#888' },
+        title: { display: true, text: 'Geekbench 6 跑分', color: '#888', font: { size: 12 } }
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
